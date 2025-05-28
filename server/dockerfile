@@ -1,18 +1,54 @@
-# Dockerfile for proxy server
+# Dockerfile for proxy server based on Ubuntu 20.04
+
+# +================ BASE IMAGE ==================+
+# Use official Ubuntu 20.04 as base image
 FROM ubuntu:20.04
 
-# Avoid prompts during package installation
+# +=========== ENVIRONMENT VARIABLES ============+
+# Prevent interactive prompts during package installation (automate builds)
 ENV DEBIAN_FRONTEND=noninteractive
 
-#&================ Supervisor ================&#
-# Install Supervisor and clean up cache
+
+
+# +============ INSTALL SUPERVISOR ==============+
+# Update package lists and install Supervisor to manage processes
 RUN apt update && apt install -y supervisor && apt clean
 
-# Create log directory for Supervisor
+# Create directory for Supervisor logs (default log location)
 RUN mkdir -p /var/log/supervisor
 
-# Copy Supervisor configuration file
+# Copy custom Supervisor configuration file into container
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Start Supervisor when the container runs
+
+
+# +============ INSTALL SQUID PROXY =============+
+# Update package lists again and install Squid proxy server
+RUN apt update && apt install -y squid && apt clean
+
+# Create directory for additional Squid configuration files (e.g., blacklists)
+RUN mkdir -p /etc/squid/blacklists
+
+# Copy main Squid configuration file into container
+COPY squid/config/squid.conf /etc/squid/squid.conf
+
+# Copy custom blacklist files for Squid configuration
+COPY squid/blacklists /etc/squid/blacklists
+
+
+
+# +================== PORTS ====================+
+# Expose the default Squid proxy port (3128)
+EXPOSE 3128
+
+
+
+# +================== GENERAL ==================+
+# Remove cached package lists to reduce image size
+RUN rm -rf /var/lib/apt/lists/*
+
+
+
+# +============== STARTUP COMMAND ==============+
+# Use supervisord to start and manage Squid and other processes
 CMD ["/usr/bin/supervisord"]
