@@ -4,7 +4,19 @@ services:
   proxy_service:
     build: .
     container_name: serverProxy
+    ports:
+      - "3128:3128"
     networks:
       - default
+      - internal_net
     tty: true
     stdin_open: true
+
+networks:
+  internal_net:
+    name: internal_net #- important for client container connection
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
