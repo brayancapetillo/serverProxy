@@ -4,6 +4,8 @@ services:
   proxy_service:
     build: .
     container_name: serverProxy
+    ports:
+      - "3128:3128"
     networks:
       - default
       - internal_net
