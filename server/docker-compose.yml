@@ -6,5 +6,15 @@ services:
     container_name: serverProxy
     networks:
       - default
+      - internal_net
     tty: true
     stdin_open: true
+
+networks:
+  internal_net:
+    name: internal_net #- important for client container connection
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
