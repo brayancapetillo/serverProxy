@@ -1,0 +1,43 @@
+# - Docker build cache files
+**/.dockerignore
+
+# - Docker Compose override files (local env)
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# - Docker volumes and containers metadata
+docker-compose.yml.override
+
+# - Docker Compose files (local env)
+.env
+
+# - Docker container logs
+*.log
+
+# - Docker temp files
+**/tmp/
+**/temp/
+
+# - Docker volumes (if mounted locally)
+volumes/
+data/
+
+# - Docker Swarm secrets and configs (if any)
+secrets/
+configs/
+
+# - Docker image tarballs
+*.tar
+
+# - Kubernetes or Helm related files if used with Docker
+*.kube*
+*.helm*
+
+# - js or other language dependencies and build artifacts (optional, adjust to your project)
+node_modules/
+dist/
+build/
+
+# - generated files (optional)
+.DS_Store
+Thumbs.db
