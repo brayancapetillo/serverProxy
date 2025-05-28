@@ -1,6 +1,18 @@
-# Dockerfile for proxy server with Squid
+# Dockerfile for proxy server
 FROM ubuntu:20.04
 
+# Avoid prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-CMD [ "bash" ]
+#&================ Supervisor ================&#
+# Install Supervisor and clean up cache
+RUN apt update && apt install -y supervisor && apt clean
+
+# Create log directory for Supervisor
+RUN mkdir -p /var/log/supervisor
+
+# Copy Supervisor configuration file
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Start Supervisor when the container runs
+CMD ["/usr/bin/supervisord"]
