@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  proxy_service:
+    build: .
+    container_name: serverProxy
+    networks:
+      - default
+    tty: true
+    stdin_open: true
