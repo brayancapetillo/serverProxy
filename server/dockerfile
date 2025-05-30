@@ -1,19 +1,19 @@
 # Dockerfile for proxy server based on Ubuntu 20.04
 
-# +================ BASE IMAGE ==================+
+# +================ BASE IMAGE ==================+ #
 # Use official Ubuntu 20.04 as base image
 FROM ubuntu:20.04
 
-# +=========== ENVIRONMENT VARIABLES ============+
+# +=========== ENVIRONMENT VARIABLES ============+ #
 # Prevent interactive prompts during package installation (automate builds)
 ENV DEBIAN_FRONTEND=noninteractive
 
 # &================== VERSION ==================&#
-LABEL version="1.0.0"
+LABEL version="2.0.0"
 
 
 
-# +============ INSTALL SUPERVISOR ==============+
+# +============ INSTALL SUPERVISOR ==============+ #
 # Update package lists and install Supervisor to manage processes
 RUN apt update && apt install -y supervisor && apt clean
 
@@ -25,7 +25,7 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 
 
-# +============ INSTALL SQUID PROXY =============+
+# +============ INSTALL SQUID PROXY =============+ #
 # Update package lists again and install Squid proxy server
 RUN apt update && apt install -y squid && apt clean
 
@@ -40,18 +40,34 @@ COPY squid/blacklists /etc/squid/blacklists
 
 
 
-# +================== PORTS ====================+
+# +============= INSTALL NGINX ==================+ #
+# Update package lists again and install nginx for web server functionality
+RUN apt update && apt install -y nginx && apt clean
+
+# Copy NGINX config files
+COPY nginx/config/*.conf /etc/nginx/sites-available/
+
+# Copy site content
+COPY nginx/sites/adminsiteanars /var/www/adminsiteanars
+COPY nginx/sites/sakurasitemovi /var/www/sakurasitemovi
+
+# Enable the sites
+RUN ln -s /etc/nginx/sites-available/adminsiteanars.conf /etc/nginx/sites-enabled/adminsiteanars.conf
+RUN ln -s /etc/nginx/sites-available/sakurasitemovi.conf /etc/nginx/sites-enabled/sakurasitemovi.conf
+
+
+# +================== PORTS ====================+ #
 # Expose the default Squid proxy port (3128)
-EXPOSE 3128
+EXPOSE 3128 80
 
 
 
-# +================== GENERAL ==================+
+# +================== GENERAL ==================+ #
 # Remove cached package lists to reduce image size
 RUN rm -rf /var/lib/apt/lists/*
 
 
 
-# +============== STARTUP COMMAND ==============+
+# +============== STARTUP COMMAND ==============+ #
 # Use supervisord to start and manage Squid and other processes
 CMD ["/usr/bin/supervisord"]

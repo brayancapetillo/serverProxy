@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>"
+    />
+
+    <title>Panel Administrador - Verificación de Host y DNS</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        height: 100%;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #d0e7ff; /* azul claro suave */
+        background-color: #102a44; /* azul oscuro */
+      }
+
+      .container {
+        position: relative;
+        min-height: 100vh;
+        background-image: url("https://images.pexels.com/photos/1438761/pexels-photo-1438761.jpeg?cs=srgb&dl=pexels-digitech-1438761.jpg&fm=jpg");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        gap: 2rem;
+        flex-wrap: wrap; /* Permite que los elementos bajen en pantallas pequeñas */
+      }
+
+      /* Overlay para oscurecer la imagen un poco */
+      .container::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5); /* azul oscuro semitransparente */
+        z-index: 1;
+      }
+
+      .left-text,
+      .right-text {
+        position: relative;
+        z-index: 2;
+        flex: 1 1 500px; /* crece, encoge, con base mínima 300px */
+        max-width: 550px;
+      }
+
+      .left-text h1 {
+        font-weight: 700;
+        font-size: 3.5rem;
+        line-height: 1.1;
+        color: #e1f0ff; /* azul muy claro */
+      }
+
+      .left-text h1 .highlight {
+        font-weight: 900;
+        color: #4a90e2; /* azul vibrante */
+      }
+
+      .left-text small {
+        font-style: italic;
+        opacity: 0.8;
+        margin-top: 10px;
+        display: inline-block;
+        color: #a3c1ff; /* azul claro */
+      }
+
+      .right-text {
+        text-align: right;
+      }
+
+      .right-text h2 {
+        font-weight: 900;
+        font-size: 2rem;
+        color: #6ba6ff; /* azul medio */
+        margin-bottom: 0.5rem;
+      }
+
+      .right-text p {
+        font-size: 1rem;
+        line-height: 1.4;
+        color: #c7dfff; /* azul muy claro */
+        opacity: 0.9;
+      }
+
+      /* Icon share bottom left */
+      .share-icon {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 2;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9rem;
+        color: #a3c1ff; /* azul claro para ícono y texto */
+        opacity: 0.85;
+      }
+
+      .share-icon svg {
+        fill: #a3c1ff;
+        width: 16px;
+        height: 16px;
+      }
+
+      /* MEDIA QUERIES para pantallas pequeñas */
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          padding: 1rem;
+          text-align: center;
+        }
+
+        .right-text {
+          text-align: center;
+          max-width: 100%;
+        }
+
+        .left-text h1 {
+          font-size: 2.5rem;
+        }
+
+        .right-text h2 {
+          font-size: 1.5rem;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .left-text h1 {
+          font-size: 2rem;
+        }
+
+        .right-text h2 {
+          font-size: 1.2rem;
+        }
+
+        .right-text p {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-text">
+        <h1>BIENVENIDO <span class="highlight">ADMINISTRADOR</span></h1>
+        <small>Panel de Control de Verificación de Host y DNS</small>
+      </div>
+      <div class="right-text">
+        <h2>Estado del Sistema</h2>
+        <p>
+          El host está activo y el servicio DNS está funcionando correctamente.
+          Como administrador, puedes gestionar configuraciones avanzadas y
+          revisar el historial de actividad para asegurar la estabilidad del
+          sistema.
+        </p>
+      </div>
+      <div class="share-icon" title="Compartir">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.1 3.1 0 0 0 0-1.4l7.05-4.11a3 3 0 1 0-.91-1.46l-7.05 4.11a3 3 0 1 0 0 4.29l7.12 4.15c.5-.45 1.16-.74 1.89-.74a3 3 0 1 0 0-6z"
+          />
+        </svg>
+        compartir
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>"
+    />
+
+    <title>Landing Virtual Host - Prueba Nginx</title>
+    <style>
+      /* Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        height: 100%;
+        font-family: "Poppins", sans-serif;
+        color: #fff0f6; /* rosa muy claro */
+        background: linear-gradient(135deg, #fce1f3 0%, #fbc7d4 100%);
+        overflow-x: hidden;
+      }
+
+      .container {
+        position: relative;
+        min-height: 100vh;
+        background-image: url("https://images5.alphacoders.com/135/1354014.png");
+        background-size: cover;
+        background-position: center;
+        display: grid;
+        grid-template-columns: 35% 50%;
+        justify-content: space-between;
+        border-radius: 12px;
+      }
+
+      .left-text {
+        display: grid;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 40px;
+      }
+
+      .right-text {
+        display: grid;
+        place-items: center;
+      }
+
+      .cont-right {
+        display: flex;
+        flex-direction: column;
+        max-width: 500px;
+      }
+
+      .cont-left {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cont-left h1 {
+        font-weight: 800;
+        font-size: 3.8rem;
+        line-height: 1.1;
+        text-align: end;
+        color: #ffffff; /* rosa vibrante */
+        letter-spacing: 2px;
+      }
+
+      .cont-left h1 .highlight {
+        color: #fa4169; /* rosa intenso */
+        font-weight: 900;
+      }
+
+      .cont-left small {
+        display: inline-block;
+        margin-top: 14px;
+        font-style: italic;
+        text-align: end;
+        font-weight: 500;
+        color: #ffffff; /* rosa oscuro */
+        letter-spacing: 0.1em;
+      }
+
+      .right-text {
+        text-align: left;
+      }
+
+      .right-text h2 {
+        font-weight: 700;
+        font-size: 2.4rem;
+        color: #fa4169; /* púrpura rosado */
+        margin-bottom: 1rem;
+        border-left: 6px solid #fa4169;
+        padding-left: 12px;
+      }
+
+      .right-text p {
+        font-size: 1.15rem;
+        line-height: 1.6;
+        color: #4d4a4a; /* púrpura oscuro */
+        opacity: 0.9;
+        letter-spacing: 0.03em;
+      }
+
+      .share-icon {
+        position: absolute;
+        bottom: 25px;
+        left: 25px;
+        z-index: 2;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1rem;
+        color: #fa4169;
+        opacity: 0.85;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        user-select: none;
+        transition: color 0.3s ease;
+      }
+
+      .share-icon:hover {
+        color: #d6336c;
+      }
+
+      .share-icon svg {
+        fill: #fa4169;
+        width: 18px;
+        height: 18px;
+        transition: fill 0.3s ease;
+      }
+
+      .share-icon:hover svg {
+        fill: #d6336c;
+      }
+
+      /* Media Queries */
+      @media (max-width: 900px) {
+        .container {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+
+        .left-text {
+          display: grid;
+          place-items: center;
+          background: rgba(0, 0, 0, 0.3);
+          padding: 0px;
+          height: 150px;
+        }
+
+        .right-text {
+          text-align: center;
+        }
+
+        .left-text h1 {
+          font-size: 3rem;
+          text-align: center;
+        }
+
+        .cont-left small {
+          text-align: center;
+        }
+
+        .right-text h2 {
+          font-size: 2rem;
+          border-left: none;
+          padding-left: 0;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .left-text h1 {
+          font-size: 2.2rem;
+        }
+
+        .right-text h2 {
+          font-size: 1.6rem;
+        }
+
+        .right-text p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="container"
+      role="main"
+      aria-label="Página de prueba para host virtual Nginx"
+    >
+      <div class="left-text">
+        <div class="cont-left">
+          <h1>Prueba de <span class="highlight">Host Virtual</span></h1>
+          <small>Configuración con Nginx</small>
+        </div>
+      </div>
+      <div class="right-text">
+        <div class="cont-right">
+          <h2>¡Tu sitio está activo!</h2>
+          <p>
+            Esta página confirma que el host virtual está correctamente
+            configurado y funcionando en Nginx. Si ves este mensaje, la
+            configuración del servidor está lista para servir contenido.
+          </p>
+        </div>
+      </div>
+      <div
+        class="share-icon"
+        title="Compartir en redes sociales"
+        role="button"
+        tabindex="0"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path
+            d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.1 3.1 0 0 0 0-1.4l7.05-4.11a3 3 0 1 0-.91-1.46l-7.05 4.11a3 3 0 1 0 0 4.29l7.12 4.15c.5-.45 1.16-.74 1.89-.74a3 3 0 1 0 0-6z"
+          />
+        </svg>
+        compartir
+      </div>
+    </div>
+  </body>
+</html>

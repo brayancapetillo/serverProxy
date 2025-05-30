@@ -6,6 +6,7 @@ services:
     container_name: serverProxy
     ports:
       - "3128:3128"
+      - "80:80"
     networks:
       - default
       - internal_net
@@ -19,4 +20,4 @@ networks:
     internal: true
     ipam:
       config:
-        - subnet: 10.0.0.0/24
+        - subnet: 10.89.0.0/24
