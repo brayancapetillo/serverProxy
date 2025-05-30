@@ -6,6 +6,7 @@ services:
     container_name: serverProxy
     ports:
       - "3128:3128"
+      - "80:80"
     networks:
       - default
       - internal_net
