@@ -9,7 +9,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # &================== VERSION ==================&#
-LABEL version="1.0.0"
+LABEL version="2.0.0"
 
 
 
