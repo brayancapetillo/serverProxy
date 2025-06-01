@@ -78,8 +78,9 @@ COPY bind/zones/ /etc/bind/zones/
 # - iputils-ping: network utility to test host reachability
 # - nano: simple command line text editor
 # - dnsutils: DNS lookup tools like dig
+# - iproute2: collection of utilities for managing networking
 # Then clean apt cache to reduce image size
-RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils iproute2 && rm -rf /var/lib/apt/lists/*
 
 
 # +=============== DNS MANUAL ==================+ #
