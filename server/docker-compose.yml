@@ -11,8 +11,9 @@ services:
       - "53:53/udp"
       - "53:53/tcp"
     networks:
-      - default
-      - internal_net
+      default: {}
+      internal_net:
+        ipv4_address: 10.89.0.2
     dns:
       - 8.8.8.8
       - 10.89.0.2     # internal DNS server IP for client containers
