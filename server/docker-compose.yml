@@ -4,9 +4,14 @@ services:
   proxy_service:
     build: .
     container_name: serverProxy
+    # extra_hosts:
+    # - "adminsiteanars.com:127.0.0.1"
+    # - "sakurasitemovi.com:127.0.0.1"
     ports:
       - "3128:3128"
       - "80:80"
+      - "53:53/udp"
+      - "53:53/tcp"
     networks:
       - default
       - internal_net

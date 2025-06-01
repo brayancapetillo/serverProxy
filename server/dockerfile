@@ -9,7 +9,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # &================== VERSION ==================&#
-LABEL version="2.0.0"
+LABEL version="3.0.0"
 
 
 
@@ -56,9 +56,24 @@ RUN ln -s /etc/nginx/sites-available/adminsiteanars.conf /etc/nginx/sites-enable
 RUN ln -s /etc/nginx/sites-available/sakurasitemovi.conf /etc/nginx/sites-enabled/sakurasitemovi.conf
 
 
+# +============= INSTALL AND CONFIGURE BIND =============+ #
+# Update package lists and install BIND9 DNS server along with utilities and documentation
+RUN apt update && apt install -y bind9 bind9utils bind9-doc && apt clean
+
+# Create necessary directories for BIND runtime cache and DNS zone files
+RUN mkdir -p /var/cache/bind /etc/bind/zones
+
+# Copy BIND main configuration files into the container
+COPY bind/config/named.conf /etc/bind/named.conf
+COPY bind/config/named.conf.local /etc/bind/named.conf.local
+COPY bind/config/named.conf.options /etc/bind/named.conf.options
+
+# Copy DNS zone files to the designated zones directory
+COPY bind/zones/ /etc/bind/zones/
+
 # +================== PORTS ====================+ #
 # Expose the default Squid proxy port (3128)
-EXPOSE 3128 80
+EXPOSE 3128 80 53/udp 53/tcp
 
 
 
@@ -71,3 +86,4 @@ RUN rm -rf /var/lib/apt/lists/*
 # +============== STARTUP COMMAND ==============+ #
 # Use supervisord to start and manage Squid and other processes
 CMD ["/usr/bin/supervisord"]
+
