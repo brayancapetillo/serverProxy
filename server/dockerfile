@@ -82,6 +82,12 @@ COPY bind/zones/ /etc/bind/zones/
 RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils && rm -rf /var/lib/apt/lists/*
 
 
+# +=============== DNS MANUAL ==================+ #
+# Copy custom DNS configuration file for manual DNS settings
+COPY global/setup-dns.sh /usr/local/bin/setup-dns.sh
+RUN chmod +x /usr/local/bin/setup-dns.sh
+
+
 
 # +================== PORTS ====================+ #
 # Expose the default Squid proxy port (3128)
@@ -97,5 +103,5 @@ RUN rm -rf /var/lib/apt/lists/*
 
 # +============== STARTUP COMMAND ==============+ #
 # Use supervisord to start and manage Squid and other processes
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/local/bin/setup-dns.sh", "/usr/bin/supervisord", "-n"]
 
