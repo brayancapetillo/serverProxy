@@ -1,0 +1,9 @@
+zone "adminsiteanars.com" {
+    type master;
+    file "/etc/bind/zones/db.adminsiteanars.com";
+};
+
+zone "sakurasitemovi.com" {
+    type master;
+    file "/etc/bind/zones/db.sakurasitemovi.com";
+};

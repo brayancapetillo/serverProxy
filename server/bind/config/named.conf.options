@@ -1,0 +1,20 @@
+options {
+    directory "/var/cache/bind";
+
+    listen-on port 53 { any; };
+    listen-on-v6 { none; };   // Desactivar IPv6 si no tienes soporte
+
+    allow-query { any; };
+
+    recursion yes;
+
+    dnssec-validation auto;
+
+    forwarders {
+        8.8.8.8;
+        1.1.1.1;
+    };
+
+    // Desactivar acceso a root hints (si usas solo forwarders)
+    forward only;
+};
