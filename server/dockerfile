@@ -71,6 +71,18 @@ COPY bind/config/named.conf.options /etc/bind/named.conf.options
 # Copy DNS zone files to the designated zones directory
 COPY bind/zones/ /etc/bind/zones/
 
+
+# +======= INSTALL NETWORK AND DNS TOOLS =======+ #
+# Update package lists and install:
+# - curl: command line tool for transferring data with URLs
+# - iputils-ping: network utility to test host reachability
+# - nano: simple command line text editor
+# - dnsutils: DNS lookup tools like dig
+# Then clean apt cache to reduce image size
+RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils && rm -rf /var/lib/apt/lists/*
+
+
+
 # +================== PORTS ====================+ #
 # Expose the default Squid proxy port (3128)
 EXPOSE 3128 80 53/udp 53/tcp
