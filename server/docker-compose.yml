@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   proxy_service:
     build: .
@@ -15,6 +13,9 @@ services:
     networks:
       - default
       - internal_net
+    dns:
+      - 8.8.8.8
+      - 10.89.0.2     # internal DNS server IP for client containers
     tty: true
     stdin_open: true
 
