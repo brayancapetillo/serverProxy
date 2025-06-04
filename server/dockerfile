@@ -72,6 +72,13 @@ COPY bind/config/named.conf.options /etc/bind/named.conf.options
 COPY bind/zones/ /etc/bind/zones/
 
 
+
+# +============= INSTALL IPTABLES =============+ #
+# Update package lists and install iptables for managing firewall rules
+RUN apt update && apt install -y iptables && apt clean
+
+
+
 # +======= INSTALL NETWORK AND DNS TOOLS =======+ #
 # Update package lists and install:
 # - curl: command line tool for transferring data with URLs
@@ -85,10 +92,19 @@ COPY bind/zones/ /etc/bind/zones/
 RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils iproute2 ftp telnet && rm -rf /var/lib/apt/lists/*
 
 
-# +=============== DNS MANUAL ==================+ #
-# Copy custom DNS configuration file for manual DNS settings
+
+# +========== DNS MANUAL & IPTABLES =============+ #
+# Copy custom DNS configuration file for manual DNS settings script to the container
 COPY global/setup-dns.sh /usr/local/bin/setup-dns.sh
 RUN chmod +x /usr/local/bin/setup-dns.sh
+
+# Copy custom iptables rules setup script to the container
+COPY global/setup-iptables.sh /usr/local/bin/setup-iptables.sh
+RUN chmod +x /usr/local/bin/setup-iptables.sh
+
+# Copy custom iptables and dns setup script to the container
+COPY global/start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 
 
@@ -106,6 +122,6 @@ RUN rm -rf /var/lib/apt/lists/*
 
 # +============== STARTUP COMMAND ==============+ #
 # Use supervisord to start and manage Squid and other processes
-CMD ["/usr/local/bin/setup-dns.sh", "/usr/bin/supervisord", "-n"]
+CMD ["/usr/local/bin/start.sh"]
 
 
