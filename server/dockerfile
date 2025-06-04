@@ -79,8 +79,10 @@ COPY bind/zones/ /etc/bind/zones/
 # - nano: simple command line text editor
 # - dnsutils: DNS lookup tools like dig
 # - iproute2: collection of utilities for managing networking
+# - ftp: command line FTP client
+# - telnet: simple command line tool for testing network connections
 # Then clean apt cache to reduce image size
-RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils iproute2 && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils iproute2 ftp telnet && rm -rf /var/lib/apt/lists/*
 
 
 # +=============== DNS MANUAL ==================+ #
@@ -105,4 +107,5 @@ RUN rm -rf /var/lib/apt/lists/*
 # +============== STARTUP COMMAND ==============+ #
 # Use supervisord to start and manage Squid and other processes
 CMD ["/usr/local/bin/setup-dns.sh", "/usr/bin/supervisord", "-n"]
+
 
