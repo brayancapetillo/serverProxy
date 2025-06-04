@@ -1,6 +1,8 @@
 services:
   proxy_service:
     build: .
+    cap_add:
+      - NET_ADMIN
     container_name: serverProxy
     # extra_hosts:
     # - "adminsiteanars.com:127.0.0.1"
