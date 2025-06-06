@@ -27,6 +27,9 @@ iptables -I FORWARD -m iprange --dst-range 10.89.0.40-10.89.0.130 -j DROP
 # Block ICMP echo-reply packets to prevent ping replies
 sudo iptables -A OUTPUT -p icmp --icmp-type echo-reply -j DROP
 
+# 5. Block port 25 (SMTP) for device with specific IP
+# Note: In docker containers, MAC addresses are not typically used in iptables rules.
+iptables -I INPUT -p tcp --dport 25 -s 10.89.0.150 -j DROP
 
 
 # +============= BASIC RULES ==============+
@@ -36,6 +39,8 @@ iptables -A INPUT -p tcp --dport 80 -j ACCEPT                       # Nginx (gen
 iptables -A INPUT -p udp --dport 53 -j ACCEPT                       # DNS UDP
 iptables -A INPUT -p tcp --dport 53 -j ACCEPT                       # DNS TCP
 iptables -A INPUT -p tcp --dport 21 -j ACCEPT                       # FTP port 21 allowed
+iptables -A INPUT -p tcp --dport 25 -j ACCEPT                       # SMTP port 25 allowed
+iptables -A OUTPUT -p tcp --dport 25 -j ACCEPT                      # SMTP port 25 allowed (outbound)
 iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT        # Allow ping (ICMP echo-request)
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT    # Established connections
 
