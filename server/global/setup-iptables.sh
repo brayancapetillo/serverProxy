@@ -20,6 +20,9 @@ iptables -I INPUT -p tcp --dport 80 -s 10.89.0.10 -j REJECT --reject-with tcp-re
 # 2. Block access to port 21 (FTP) from specific IP
 iptables -I INPUT -p tcp --dport 21 -s 10.89.0.20 -j REJECT --reject-with tcp-reset
 
+# 3. Deny outbound traffic to IP range 10.89.0.40 - 10.89.0.130
+iptables -I FORWARD -m iprange --dst-range 10.89.0.40-10.89.0.130 -j DROP
+
 
 # +============= BASIC RULES ==============+
 iptables -A INPUT -i lo -j ACCEPT                                   # Loopback
