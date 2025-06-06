@@ -12,6 +12,7 @@ services:
       - "80:80"
       - "53:53/udp"
       - "53:53/tcp"
+      - "21:21"
     networks:
       default: {}
       internal_net:
