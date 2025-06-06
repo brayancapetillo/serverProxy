@@ -94,6 +94,14 @@ RUN sed -i 's/\r$//' /etc/vsftpd.conf
 RUN useradd -m movi && echo "movi:1234" | chpasswd
 
 
+# *====== MAIL SERVICES ======+ #
+# Update package lists and install Postfix for handling email services
+RUN apt-get update && apt-get install -y postfix && apt-get clean
+
+# copy Postfix configuration file into the container
+COPY iptables/mail/main.cf /etc/postfix/main.cf
+
+
 # +======= INSTALL NETWORK AND DNS TOOLS =======+ #
 # Update package lists and install:
 # - curl: command line tool for transferring data with URLs
@@ -123,8 +131,10 @@ RUN chmod +x /usr/local/bin/start.sh
 
 
 # +================== PORTS ====================+ #
-# Expose the default Squid proxy port (3128)
-EXPOSE 3128 80 53/udp 53/tcp 21
+# Expose the default Squid proxy port (3128), exposed NGINX ports (80),
+# BIND DNS ports (53/udp and 53/tcp), FTP port (21),
+# and Postfix SMTP port (25)
+EXPOSE 3128 80 53/udp 53/tcp 21 25
 
 
 
