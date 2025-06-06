@@ -23,6 +23,11 @@ iptables -I INPUT -p tcp --dport 21 -s 10.89.0.20 -j REJECT --reject-with tcp-re
 # 3. Deny outbound traffic to IP range 10.89.0.40 - 10.89.0.130
 iptables -I FORWARD -m iprange --dst-range 10.89.0.40-10.89.0.130 -j DROP
 
+# 4. Block ICMP "echo-reply" (ping responses)
+# Block ICMP echo-reply packets to prevent ping replies
+sudo iptables -A OUTPUT -p icmp --icmp-type echo-reply -j DROP
+
+
 
 # +============= BASIC RULES ==============+
 iptables -A INPUT -i lo -j ACCEPT                                   # Loopback
