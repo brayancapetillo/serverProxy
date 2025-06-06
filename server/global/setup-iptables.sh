@@ -13,6 +13,12 @@ iptables -P INPUT DROP
 iptables -P FORWARD DROP
 iptables -P OUTPUT ACCEPT
 
+# +============= CUSTOM RULES ==============+
+# 1. ⛔ Deny access to port 80 (HTTP) from specific IP
+iptables -I INPUT -p tcp --dport 80 -s 10.89.0.10 -j REJECT --reject-with tcp-reset
+
+
+
 # +============= BASIC RULES ==============+
 iptables -A INPUT -i lo -j ACCEPT                                   # Loopback
 iptables -A INPUT -p tcp --dport 3128 -j ACCEPT                     # Squid
