@@ -77,6 +77,21 @@ COPY bind/zones/ /etc/bind/zones/
 # Update package lists and install iptables for managing firewall rules
 RUN apt update && apt install -y iptables && apt clean
 
+# *====== IPTABLES SERVICES ======+ #
+# update package lists and install vsftpd (FTP server)
+RUN apt update && apt install -y vsftpd && apt clean
+
+# create directory for service vsftpd to test FTP connections
+RUN mkdir -p /var/run/vsftpd/empty && chmod 755 /var/run/vsftpd/empty
+
+# copy vsftpd configuration file into the container
+COPY iptables/ftp/vsftpd.conf /etc/vsftpd.conf
+
+# delete carriage return characters from vsftpd.conf to avoid issues with line endings
+RUN sed -i 's/\r$//' /etc/vsftpd.conf
+
+# create a user for FTP access
+RUN useradd -m movi && echo "movi:1234" | chpasswd
 
 
 # +======= INSTALL NETWORK AND DNS TOOLS =======+ #
@@ -90,7 +105,6 @@ RUN apt update && apt install -y iptables && apt clean
 # - telnet: simple command line tool for testing network connections
 # Then clean apt cache to reduce image size
 RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils iproute2 ftp telnet && rm -rf /var/lib/apt/lists/*
-
 
 
 # +========== DNS MANUAL & IPTABLES =============+ #
@@ -110,7 +124,7 @@ RUN chmod +x /usr/local/bin/start.sh
 
 # +================== PORTS ====================+ #
 # Expose the default Squid proxy port (3128)
-EXPOSE 3128 80 53/udp 53/tcp
+EXPOSE 3128 80 53/udp 53/tcp 21
 
 
 
