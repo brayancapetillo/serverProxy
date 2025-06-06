@@ -111,8 +111,9 @@ COPY iptables/mail/main.cf /etc/postfix/main.cf
 # - iproute2: collection of utilities for managing networking
 # - ftp: command line FTP client
 # - telnet: simple command line tool for testing network connections
+# - mailutils: utilities for sending and receiving emails
 # Then clean apt cache to reduce image size
-RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils iproute2 ftp telnet && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl iputils-ping nano dnsutils iproute2 ftp telnet mailutils && rm -rf /var/lib/apt/lists/*
 
 
 # +========== DNS MANUAL & IPTABLES =============+ #
